@@ -12,8 +12,10 @@ app.use(express.json());
 app.get("/", (req, res) => res.json({ message: "This is the taskboard app" }));
 
 import authRoutes from "./routes/authRoutes.js";
+import columnsRoutes from "./routes/columnsRoutes.js";
 
 app.use("/auth", authRoutes);
+app.use("/columns", columnsRoutes);
 
 const PORT = process.env.PORT || 3000;
 
