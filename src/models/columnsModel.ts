@@ -15,4 +15,23 @@ async function getColumnsByUserModel(userId: number): Promise<Column[] | undefin
   return result.rows;
 }
 
-export default { createColumnModel, getColumnsByUserModel };
+async function updateColumnByUserModel(
+  name: string,
+  position: number,
+  userId: number,
+  columnId: number,
+): Promise<Column | undefined> {
+  const result = await pool.query(
+    `UPDATE columns SET name = $1, position = $2 WHERE user_id = $3 AND id = $4 RETURNING *`,
+    [name, position, userId, columnId],
+  );
+  return result.rows[0];
+}
+
+async function deleteColumnByUserModel(userId: number, columnId: number): Promise<Column | undefined> {
+  const result = await pool.query(`DELETE FROM columns WHERE user_id = $1 AND id = $2 RETURNING *`, [userId, columnId]);
+
+  return result.rows[0];
+}
+
+export default { createColumnModel, getColumnsByUserModel, updateColumnByUserModel, deleteColumnByUserModel };
