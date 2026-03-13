@@ -13,9 +13,11 @@ app.get("/", (req, res) => res.json({ message: "This is the taskboard app" }));
 
 import authRoutes from "./routes/authRoutes.js";
 import columnsRoutes from "./routes/columnsRoutes.js";
+import tasksRoutes from "./routes/tasksRoutes.js";
 
 app.use("/auth", authRoutes);
 app.use("/columns", columnsRoutes);
+app.use("/tasks", tasksRoutes);
 
 const PORT = process.env.PORT || 3000;
 

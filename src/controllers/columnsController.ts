@@ -14,7 +14,7 @@ export const getColumnsByUserController = async (req: Request, res: Response) =>
     const userId = req.user.id;
     const columns = await getColumnsByUserModel(userId);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: columns,
     });
@@ -38,7 +38,7 @@ export const createColumnsController = async (req: Request, res: Response) => {
     const userId = req.user.id;
     const { name, position } = req.body;
 
-    if (!name || !position) {
+    if (!name || position === undefined) {
       return res.status(400).json({
         success: false,
         message: "Columns must contain a name and position",
@@ -47,7 +47,7 @@ export const createColumnsController = async (req: Request, res: Response) => {
 
     const created = await createColumnModel(name, userId, position);
 
-    res.status(201).json({
+    return res.status(201).json({
       success: true,
       data: created,
       message: "Column created successfully",
@@ -89,7 +89,7 @@ export const updateColumnByUserController = async (req: Request, res: Response) 
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: updated,
       message: "Column updated successfully",
@@ -123,7 +123,7 @@ export const deleteColumnByUserController = async (req: Request, res: Response) 
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: deleted,
       message: "Column deleted successfully",

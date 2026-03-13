@@ -82,7 +82,7 @@ export const login = async (req: Request, res: Response) => {
 
     const token = jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: "7d" });
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: { user: safeUser, token },
       message: "Login Successful",
