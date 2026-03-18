@@ -27,14 +27,16 @@ export const signUp = async (req: Request, res: Response) => {
 
     const user = await createUser(username, email, passwordHash);
 
+    const { password: _password, ...safeUser } = user;
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) throw new Error("JWT_SECRET missing");
+
+    const token = jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: "7d" });
+
     return res.status(201).json({
       success: true,
-      data: {
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        created_at: user.created_at,
-      },
+      data: { user: safeUser, token },
       message: "User created successfully",
     });
   } catch (err) {
