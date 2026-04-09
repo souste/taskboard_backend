@@ -73,10 +73,17 @@ export const updateColumnByUserController = async (req: Request, res: Response) 
     const columnId = Number(req.params.id);
     const { name, position } = req.body;
 
-    if (!name || !position) {
+    if (name === undefined && position === undefined) {
       return res.status(400).json({
         success: false,
-        message: "Columns must contain a name and position",
+        message: "You must provide at least one field to update",
+      });
+    }
+
+    if (position !== undefined && typeof position !== "number") {
+      return res.status(400).json({
+        success: false,
+        message: "Position must be a number",
       });
     }
 

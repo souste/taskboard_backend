@@ -25,7 +25,7 @@ async function getTaskByUserModel(userId: number, taskId: number): Promise<Task 
   return result.rows[0];
 }
 
-async function updateTaskByUserModel(
+async function updateTaskByUserModel(   
   title: string,
   description: string,
   position: number,
