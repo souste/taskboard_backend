@@ -25,7 +25,7 @@ async function getTaskByUserModel(userId: number, taskId: number): Promise<Task 
   return result.rows[0];
 }
 
-async function updateTaskByUserModel(   
+async function updateTaskByUserModel(
   title: string,
   description: string,
   position: number,
@@ -34,7 +34,7 @@ async function updateTaskByUserModel(
   taskId: number,
 ): Promise<Task | undefined> {
   const result = await pool.query(
-    `UPDATE tasks SET title = $1, description = $2, position = $3, column_id = $4 WHERE user_id = $5 AND id = $6 RETURNING *`,
+    `UPDATE tasks SET title = $1, description = $2, position = $3, column_id = $4, updated_at = CURRENT_TIMESTAMP WHERE user_id = $5 AND id = $6 RETURNING *`,
     [title, description, position, columnId, userId, taskId],
   );
   return result.rows[0];
