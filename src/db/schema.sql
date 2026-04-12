@@ -27,16 +27,15 @@ CREATE TABLE tasks (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
---  COMMENTS - CREATE AFTER MVP COMPLETE
+CREATE TABLE comments (
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    task_id INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
+    content TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
--- this should probably be after MVP...
--- CREATE TABLE boards (
---     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
---     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
---     name TEXT NOT NULL,
---     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
--- );
 
 
 -- MVP
@@ -58,6 +57,5 @@ CREATE TABLE tasks (
 
 -- Not MVP
 -- - Drag and drop (columns and tasks)
--- - Multiple boards
 -- - Comments
 -- - Theme settings
