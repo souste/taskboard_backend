@@ -19,6 +19,7 @@ export const getTasksByUserController = async (req: Request, res: Response) => {
       data: tasks,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -44,6 +45,7 @@ export const getTaskByUserController = async (req: Request, res: Response) => {
       data: task,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -77,6 +79,7 @@ export const createTaskController = async (req: Request, res: Response) => {
       message: "Task created successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -119,6 +122,7 @@ export const updateTaskByUserController = async (req: Request, res: Response) =>
       message: "Task updated successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -153,6 +157,7 @@ export const deleteTaskByUserController = async (req: Request, res: Response) =>
       message: "Task deleted successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",

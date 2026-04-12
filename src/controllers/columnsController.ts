@@ -19,6 +19,7 @@ export const getColumnsByUserController = async (req: Request, res: Response) =>
       data: columns,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -53,6 +54,7 @@ export const createColumnsController = async (req: Request, res: Response) => {
       message: "Column created successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -102,6 +104,7 @@ export const updateColumnByUserController = async (req: Request, res: Response) 
       message: "Column updated successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
@@ -136,6 +139,7 @@ export const deleteColumnByUserController = async (req: Request, res: Response) 
       message: "Column deleted successfully",
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Server Error",
