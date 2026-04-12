@@ -14,12 +14,12 @@ app.get("/", (req, res) => res.json({ message: "This is the taskboard app" }));
 import authRoutes from "./routes/authRoutes.js";
 import columnsRoutes from "./routes/columnsRoutes.js";
 import tasksRoutes from "./routes/tasksRoutes.js";
-// import commentRoutes from "/routes/commentRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 
 app.use("/auth", authRoutes);
 app.use("/columns", columnsRoutes);
 app.use("/tasks", tasksRoutes);
-// app.use("/tasks/:taskId/comments", commentRoutes);
+app.use("/tasks/", commentRoutes);
 
 const PORT = process.env.PORT || 3000;
 
