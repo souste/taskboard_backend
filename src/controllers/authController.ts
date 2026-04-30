@@ -32,7 +32,9 @@ export const signUp = async (req: Request, res: Response) => {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("JWT_SECRET missing");
 
-    const token = jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: "7d" });
+    const token = jwt.sign({ id: user.id, email: user.email }, secret, {
+      expiresIn: "7d",
+    });
 
     return res.status(201).json({
       success: true,
@@ -82,7 +84,11 @@ export const login = async (req: Request, res: Response) => {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("JWT_SECRET missing");
 
-    const token = jwt.sign({ id: user.id, email: user.email }, secret, { expiresIn: "7d" });
+    const token = jwt.sign(
+      { id: user.id, email: user.email, username: user.username },
+      secret,
+      { expiresIn: "7d" },
+    );
 
     return res.status(200).json({
       success: true,

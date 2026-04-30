@@ -4,9 +4,14 @@ import { Request, Response, NextFunction } from "express";
 interface JwtUserPayload {
   id: number;
   email: string;
+  username: string;
 }
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const header = req.headers.authorization;
 
@@ -24,7 +29,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     const decoded = jwt.verify(token, secret) as unknown as JwtUserPayload;
 
-    req.user = { id: decoded.id, email: decoded.email };
+    req.user = {
+      id: decoded.id,
+      email: decoded.email,
+      username: decoded.username,
+    };
 
     return next();
   } catch (err) {
