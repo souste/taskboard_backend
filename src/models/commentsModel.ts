@@ -1,19 +1,29 @@
 import pool from "../db/pool.js";
 import type { Comment } from "../types/comment.js";
 
-async function createCommentByTaskModel(content: string, userId: number, taskId: number): Promise<Comment | undefined> {
-  const result = await pool.query(`INSERT INTO comments (content, user_id, task_id) VALUES ($1, $2, $3) RETURNING *`, [
-    content,
-    userId,
-    taskId,
-  ]);
+async function createCommentByTaskModel(
+  content: string,
+  userId: number,
+  taskId: number,
+): Promise<Comment | undefined> {
+  const result = await pool.query(
+    `INSERT INTO comments (content, user_id, task_id) VALUES ($1, $2, $3) RETURNING *`,
+    [content, userId, taskId],
+  );
   return result.rows[0];
 }
 
-async function getCommentsByTaskModel(userId: number, taskId: number): Promise<Comment[] | undefined> {
+async function getCommentsByTaskModel(
+  taskId: number,
+): Promise<Comment[] | undefined> {
   const result = await pool.query(
-    `SELECT * FROM comments WHERE user_id = $1 AND task_id = $2 ORDER BY created_at ASC`,
-    [userId, taskId],
+    `SELECT c.*, 
+     u.username 
+     FROM comments c 
+     Join users u ON c.user_id = u.id 
+     WHERE c.task_id = $1 
+     ORDER BY c.created_at ASC`,
+    [taskId],
   );
   return result.rows;
 }
@@ -30,11 +40,14 @@ async function updateCommentByTaskModel(
   return result.rows[0];
 }
 
-async function deleteCommentByTaskModel(userId: number, commentId: number): Promise<Comment | undefined> {
-  const result = await pool.query(`DELETE FROM comments WHERE user_id = $1 AND id = $2 RETURNING *`, [
-    userId,
-    commentId,
-  ]);
+async function deleteCommentByTaskModel(
+  userId: number,
+  commentId: number,
+): Promise<Comment | undefined> {
+  const result = await pool.query(
+    `DELETE FROM comments WHERE user_id = $1 AND id = $2 RETURNING *`,
+    [userId, commentId],
+  );
   return result.rows[0];
 }
 

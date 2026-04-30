@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
 import commentsModel from "../models/commentsModel.js";
-const { createCommentByTaskModel, getCommentsByTaskModel, updateCommentByTaskModel, deleteCommentByTaskModel } =
-  commentsModel;
+const {
+  createCommentByTaskModel,
+  getCommentsByTaskModel,
+  updateCommentByTaskModel,
+  deleteCommentByTaskModel,
+} = commentsModel;
 
-export const getCommentsByTaskController = async (req: Request, res: Response) => {
+export const getCommentsByTaskController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
@@ -11,10 +18,10 @@ export const getCommentsByTaskController = async (req: Request, res: Response) =
         message: "Unauthorized",
       });
     }
-    const userId = req.user.id;
+
     const taskId = Number(req.params.taskId);
 
-    const comments = await getCommentsByTaskModel(userId, taskId);
+    const comments = await getCommentsByTaskModel(taskId);
 
     return res.status(200).json({
       success: true,
@@ -28,7 +35,10 @@ export const getCommentsByTaskController = async (req: Request, res: Response) =
   }
 };
 
-export const createCommentByTaskController = async (req: Request, res: Response) => {
+export const createCommentByTaskController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
@@ -69,7 +79,10 @@ export const createCommentByTaskController = async (req: Request, res: Response)
   }
 };
 
-export const updateCommentByTaskController = async (req: Request, res: Response) => {
+export const updateCommentByTaskController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
@@ -110,7 +123,10 @@ export const updateCommentByTaskController = async (req: Request, res: Response)
   }
 };
 
-export const deleteCommentByTaskController = async (req: Request, res: Response) => {
+export const deleteCommentByTaskController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
