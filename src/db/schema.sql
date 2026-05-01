@@ -6,12 +6,10 @@ CREATE TABLE users (
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Removed board_id for MVP add it back later
 CREATE TABLE columns (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    -- board_id INTEGER NOT NULL REFERENCES boards(id) ON DELETE CASCADE,
-    name TEXT NOT NULL,
+    name VARCHAR(100) NOT NULL,
     position INTEGER NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -20,8 +18,8 @@ CREATE TABLE tasks (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     column_id INTEGER NOT NULL REFERENCES columns(id) ON DELETE CASCADE,
-    title TEXT NOT NULL,
-    description TEXT,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(500),
     position INTEGER NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,31 +30,10 @@ CREATE TABLE comments (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     task_id INTEGER NOT NULL REFERENCES tasks(id) ON DELETE CASCADE,
-    content TEXT NOT NULL,
+    content VARCHAR(2000) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
 
--- MVP
--- Authentication
--- - login
--- - signup
--- - full auth + protected routes
--- Core Board Structure
--- - one board (auto-generated for each user)
--- - full column functionalty (to-do, doing, done)
--- Core Task Functionality
--- - create tasks
--- - edit tasks
--- - delete tasks
--- - move taskes between columns (via dropdowns/buttons)
--- - persist everything in the db
--- Basic UI
--- - basic tailwind styling
-
--- Not MVP
--- - Drag and drop (columns and tasks)
--- - Comments
--- - Theme settings
