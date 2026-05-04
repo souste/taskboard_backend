@@ -1,8 +1,16 @@
 import { Request, Response } from "express";
 import columnsModel from "../models/columnsModel.js";
-const { createColumnModel, getColumnsByUserModel, updateColumnByUserModel, deleteColumnByUserModel } = columnsModel;
+const {
+  createColumnModel,
+  getColumnsByUserModel,
+  updateColumnByUserModel,
+  deleteColumnByUserModel,
+} = columnsModel;
 
-export const getColumnsByUserController = async (req: Request, res: Response) => {
+export const getColumnsByUserController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
@@ -46,6 +54,12 @@ export const createColumnsController = async (req: Request, res: Response) => {
       });
     }
 
+    if (name.length > 100) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Name is too long" });
+    }
+
     const created = await createColumnModel(name, userId, position);
 
     return res.status(201).json({
@@ -62,7 +76,10 @@ export const createColumnsController = async (req: Request, res: Response) => {
   }
 };
 
-export const updateColumnByUserController = async (req: Request, res: Response) => {
+export const updateColumnByUserController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({
@@ -89,7 +106,18 @@ export const updateColumnByUserController = async (req: Request, res: Response) 
       });
     }
 
-    const updated = await updateColumnByUserModel(name, position, userId, columnId);
+    if (name.length > 100) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Name is too long" });
+    }
+
+    const updated = await updateColumnByUserModel(
+      name,
+      position,
+      userId,
+      columnId,
+    );
 
     if (!updated) {
       return res.status(404).json({
@@ -112,7 +140,10 @@ export const updateColumnByUserController = async (req: Request, res: Response) 
   }
 };
 
-export const deleteColumnByUserController = async (req: Request, res: Response) => {
+export const deleteColumnByUserController = async (
+  req: Request,
+  res: Response,
+) => {
   try {
     if (!req.user) {
       return res.status(401).json({

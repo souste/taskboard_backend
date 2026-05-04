@@ -78,6 +78,19 @@ export const createTaskController = async (req: Request, res: Response) => {
       });
     }
 
+    if (title.length > 100) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Title is too long" });
+    }
+
+    if (description && description.length > 500) {
+      return res.status(400).json({
+        success: false,
+        message: "Description must be under 500 characters",
+      });
+    }
+
     const created = await createTaskModel(
       title,
       description,
@@ -116,16 +129,24 @@ export const updateTaskByUserController = async (
     const taskId = Number(req.params.id);
     const { title, description, position, column_id } = req.body;
 
-    if (
-      !title ||
-      !description ||
-      position === undefined ||
-      column_id === undefined
-    ) {
+    if (!title || position === undefined || column_id === undefined) {
       return res.status(400).json({
         success: false,
         message:
           "Tasks must include a title, description, position, and column_id.",
+      });
+    }
+
+    if (title.length > 100) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Title is too long" });
+    }
+
+    if (description && description.length > 500) {
+      return res.status(400).json({
+        success: false,
+        message: "Description must be under 500 characters",
       });
     }
 

@@ -56,6 +56,13 @@ export const createCommentByTaskController = async (
         message: "Comments cannot be empty",
       });
     }
+
+    if (content.length > 2000) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Comment is too long" });
+    }
+
     const created = await createCommentByTaskModel(content, userId, taskId);
 
     if (!created) {
@@ -99,6 +106,12 @@ export const updateCommentByTaskController = async (
         success: false,
         message: "Comments cannot be empty",
       });
+    }
+
+    if (content.length > 2000) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Comment is too long" });
     }
 
     const updated = await updateCommentByTaskModel(content, userId, commentId);
