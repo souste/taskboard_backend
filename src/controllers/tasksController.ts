@@ -6,6 +6,7 @@ const {
   getTaskByUserModel,
   updateTaskByUserModel,
   deleteTaskByUserModel,
+  toggleTaskStatusModel,
 } = tasksModel;
 
 export const getTasksByUserController = async (req: Request, res: Response) => {
@@ -193,5 +194,48 @@ export const deleteTaskByUserController = async (
       success: false,
       message: "Server Error",
     });
+  }
+};
+
+export const toggleTaskStatusController = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
+    const userId = req.user.id;
+    const taskId = Number(req.params.id);
+    const { completed } = req.body;
+
+    if (completed === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "Status 'completed' is required",
+      });
+    }
+
+    const updated = await toggleTaskStatusModel(completed, userId, taskId);
+
+    if (!updated) {
+      return res.status(404).json({
+        success: false,
+        message: "Task not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: updated,
+      message: "Task status toggled successfully",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };

@@ -5,6 +5,7 @@ export interface Task {
   title: string;
   description: string;
   position: number;
+  completed: boolean;
   created_at: string;
   updated_at: string;
 }

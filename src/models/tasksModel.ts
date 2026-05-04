@@ -15,13 +15,23 @@ async function createTaskModel(
   return result.rows[0];
 }
 
-async function getTasksByUserModel(userId: number): Promise<Task[] | undefined> {
-  const result = await pool.query(`SELECT * FROM tasks WHERE user_id = $1`, [userId]);
+async function getTasksByUserModel(
+  userId: number,
+): Promise<Task[] | undefined> {
+  const result = await pool.query(`SELECT * FROM tasks WHERE user_id = $1`, [
+    userId,
+  ]);
   return result.rows;
 }
 
-async function getTaskByUserModel(userId: number, taskId: number): Promise<Task | undefined> {
-  const result = await pool.query(`SELECT * FROM tasks WHERE user_id = $1 AND id = $2`, [userId, taskId]);
+async function getTaskByUserModel(
+  userId: number,
+  taskId: number,
+): Promise<Task | undefined> {
+  const result = await pool.query(
+    `SELECT * FROM tasks WHERE user_id = $1 AND id = $2`,
+    [userId, taskId],
+  );
   return result.rows[0];
 }
 
@@ -40,8 +50,26 @@ async function updateTaskByUserModel(
   return result.rows[0];
 }
 
-async function deleteTaskByUserModel(userId: number, taskId: number): Promise<Task | undefined> {
-  const result = await pool.query(`DELETE FROM tasks WHERE user_id = $1 AND id = $2 RETURNING *`, [userId, taskId]);
+async function deleteTaskByUserModel(
+  userId: number,
+  taskId: number,
+): Promise<Task | undefined> {
+  const result = await pool.query(
+    `DELETE FROM tasks WHERE user_id = $1 AND id = $2 RETURNING *`,
+    [userId, taskId],
+  );
+  return result.rows[0];
+}
+
+async function toggleTaskStatusModel(
+  completed: boolean,
+  userId: number,
+  taskId: number,
+): Promise<Task | undefined> {
+  const result = await pool.query(
+    `UPDATE tasks SET completed = $1, updated_at = CURRENT_TIMESTAMP WHERE user_id = $2 AND id = $3 RETURNING * `,
+    [completed, userId, taskId],
+  );
   return result.rows[0];
 }
 
@@ -51,4 +79,5 @@ export default {
   getTaskByUserModel,
   updateTaskByUserModel,
   deleteTaskByUserModel,
+  toggleTaskStatusModel,
 };
