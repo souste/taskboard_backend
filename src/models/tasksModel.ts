@@ -18,9 +18,10 @@ async function createTaskModel(
 async function getTasksByUserModel(
   userId: number,
 ): Promise<Task[] | undefined> {
-  const result = await pool.query(`SELECT * FROM tasks WHERE user_id = $1`, [
-    userId,
-  ]);
+  const result = await pool.query(
+    `SELECT * FROM tasks WHERE user_id = $1 ORDER BY position ASC`,
+    [userId],
+  );
   return result.rows;
 }
 
