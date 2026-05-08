@@ -1,2 +1,4 @@
 node_modules
 .env
+
+DATABASE_URL=postgresql://souste_social_db_04vq_user:Qiwi6piq98Q4xBqgBv5ZYN2zvdsecyHx@dpg-d7su2q6gkk3c73dm2ga0-a.frankfurt-postgres.render.com/taskboard_db
