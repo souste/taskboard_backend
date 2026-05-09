@@ -5,30 +5,33 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue)](https://www.postgresql.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 
-This is the robust REST API powering Souste Kanban. It manages data persistence, relational task mapping, and secure user authentication for the task management ecosystem.
+This repository contains the REST API for Souste Kanban, a full-stack Kanban task management application. The backend handles authentication, task and column management, relational data mapping, and communication with the PostgreSQL database.
 
-Frontend Repository available here: https://github.com/souste/taskboard_frontend
+Frontend Repository: https://github.com/souste/taskboard_frontend
 
 ## Demo Video
 
-To be added 🎥
+🎥 [Souste Kanban Full Demo](https://youtu.be/UlOvm154tCk)
 
 ## Tech Stack
 
-- **Server:** Node.js, Express.js
-- **Database:** PostgreSQL (Relational Data & Task Ordering)
-- **Authentication:** JWT (JSON Web Tokens) & Bcrypt password hashing
-- **Type Safety:** TypeScript with custom DB-model generics
-- **Database Driver:** PG (node-postgres)
+- Node.js
+- Express.js
+- PostgreSQL
+- TypeScript
+- JWT Authentication
+- Bcrypt
+- node-postgres (pg)
 
 ## Features
 
-- **Relational Data Mapping:** Architected for 1-to-Many relationships (User -> Columns -> Tasks)
-- **Secure Authentication:** Stateless **JWT** authentication with secure password hashing via **Bcrypt**
-- **Type-Safe Queries:** Custom generic wrappers for database queries to ensure 1:1 parity with frontend types
-- **Task Reordering Logic:** Handles complex position index updates for seamless drag-and-drop synchronization
-- **Input Sanitization:** Middleware-based validation to ensure data integrity across all board actions
-- **CORS Configuration:** Optimized for secure cross-origin communication with the React frontend
+- JWT-based authentication with secure password hashing
+- CRUD operations for boards, columns, tasks, and comments
+- Relational PostgreSQL database structure for users, columns, and tasks
+- Task and column reordering logic for drag-and-drop synchronization
+- Middleware-based validation and input sanitization
+- Type-safe database queries using TypeScript generics
+- CORS configuration for frontend/backend communication
 
 ## Getting Started
 
